@@ -12,11 +12,9 @@
   padding-bottom: 13px;
   font-size: 50px;
   width: 8%;
+  margin-bottom: 15px;
 }
 
-.submitbutton{
-  height: 76px;
-  padding-top: 16px;
+.losecount{
+  margin-top: 25px;
 }
-
-
