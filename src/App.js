@@ -30,7 +30,10 @@ class App extends Component {
         console.log(hiddenword," ", usertry," ", letter, " ", position);
         // Executer l'algo de traitement
 
-        
+        for(let i = 0; i < hiddenword.length; i++){
+            // Si lettre de hiddenword == letter => stocker dans position
+        }
+
         this.setState(
             (prevState, props) => ({ losecount: this.state.losecount - 1 })
         );
