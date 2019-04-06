@@ -23,19 +23,37 @@ class App extends Component {
 
 
     handleSubmit = (event) => {
+        let losecount = this.state.losecount;
         let hiddenword = this.state.hiddenword.toLowerCase();
         let usertry = this.state.usertry;
         let letter = event.target.currentLetter.value;
-        let position = [];
-        console.log(hiddenword," ", usertry," ", letter, " ", position);
-        // Executer l'algo de traitement
+        let notBonusLetter = 1;
+
+        String.prototype.replaceAt=function(index, replacement) {
+            return this.substr(0, index) + replacement+ this.substr(index + replacement.length);
+        };
 
         for(let i = 0; i < hiddenword.length; i++){
-            // Si lettre de hiddenword == letter => stocker dans position
+            if(hiddenword.charAt(i) === letter){
+                usertry = usertry.replaceAt(i, letter);
+                if(notBonusLetter === 1){
+                    losecount++;
+                    notBonusLetter--;
+                }
+            }
         }
-
+        if(!usertry.includes("_")){
+            console.log("YOU WIN")
+        }
+        losecount--;
+        if(losecount === 0){
+            console.log("YOU LOOSE")
+        }
         this.setState(
-            (prevState, props) => ({ losecount: this.state.losecount - 1 })
+            (prevState, props) => ({
+                losecount: losecount,
+                usertry: usertry
+            })
         );
         event.preventDefault();
     }
