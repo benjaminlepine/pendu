@@ -14,20 +14,29 @@ class App extends Component {
             hiddenword: inithiddenword,
             usertry:initusertry,
             losecount:10,
-            letter:"a"
+            currentLetter:""
         }
     }
 
-    // componentWillMount(){
-    // }
+    canBeSubmitted() {
+        const { losecount } = this.state;
+        return losecount > 0;
+    }
 
+    onHandleChange=(e) => {
+        this.setState({
+            currentLetter: e.target.value
+        });
+    }
 
     handleSubmit = (event) => {
+        event.preventDefault();
         let losecount = this.state.losecount;
         let hiddenword = this.state.hiddenword.toLowerCase();
         let usertry = this.state.usertry;
         let letter = event.target.currentLetter.value;
         let notBonusLetter = 1;
+        let currentLetter = this.state.currentLetter;
 
         String.prototype.replaceAt=function(index, replacement) {
             return this.substr(0, index) + replacement+ this.substr(index + replacement.length);
@@ -42,38 +51,45 @@ class App extends Component {
                 }
             }
         }
-        if(!usertry.includes("_")){
-            console.log("YOU WIN")
-        }
         losecount--;
-        if(losecount === 0){
-            console.log("YOU LOOSE")
-        }
         this.setState(
             (prevState, props) => ({
                 losecount: losecount,
-                usertry: usertry
+                usertry: usertry,
+                currentLetter: "",
             })
         );
-        event.preventDefault();
+
+    }
+
+    componentDidUpdate(){
+        document.getElementById("currentLetter").focus();
     }
 
     render() {
         // console.log("state = ",this.state)
+        const isEnabled = this.canBeSubmitted();
+
         return (
             <div className="App">
                 <h1>HANG - MAN</h1>
                 <button>Nouveau mot</button>
                 <p className="usertry">{this.state.usertry}</p>
-                <form onSubmit={this.handleSubmit}>
-                    <label>
+                {!this.state.usertry.includes("_")&&<span>YOU WIN</span>}
+                {this.state.losecount === 0&&<span>YOU LOSE</span>}
+                <form onSubmit={this.handleSubmit} >
+                    <label disabled="disabled">
                         <input className="letterinput"
                                type="text"
                                id="currentLetter"
                                maxLength="1"
+                               onChange={this.onHandleChange}
+                               autoFocus="autofocus"
+                               value={this.state.currentLetter}
+                               autoComplete="off"
                                pattern="[A-Za-z]{1}"/>
                     </label><br/>
-                    <input type="submit" value="Submit" />
+                    <input type="submit" value="Submit" disabled={!isEnabled} />
                 </form>
                 <div className="losecount">
                     <span>Tentative restante : {this.state.losecount}</span>

@@ -18,3 +18,8 @@
 .losecount{
   margin-top: 25px;
 }
+
+#currentLetter:focus{
+  outline: none;
+  text-align:center
+}
