@@ -19,8 +19,16 @@ class App extends Component {
     }
 
     canBeSubmitted() {
-        const { losecount } = this.state;
-        return losecount > 0;
+        let { losecount } = this.state;
+        let usertry = this.state.usertry;
+        console.log("usertry = ",usertry)
+        console.log("usertry2 = ",usertry.includes("_"));
+        if(losecount > 0 && usertry.includes("_")){
+            return true
+        }
+        else{
+            return false
+        }
     }
 
     onHandleChange=(e) => {
@@ -31,15 +39,13 @@ class App extends Component {
 
     handleSubmit = (event) => {
         event.preventDefault();
-        let fond = document.getElementById("redContainer");
-        fond.style.background = '-moz-linear-gradient('
-            + '0turn' + ', ' + '#8CE68E' + ', ' + '#8CE68E' + ')';
+
         let losecount = this.state.losecount;
         let hiddenword = this.state.hiddenword.toLowerCase();
         let usertry = this.state.usertry;
         let letter = event.target.currentLetter.value;
         let notBonusLetter = 1;
-        let currentLetter = this.state.currentLetter;
+
 
         String.prototype.replaceAt=function(index, replacement) {
             return this.substr(0, index) + replacement+ this.substr(index + replacement.length);
@@ -88,11 +94,9 @@ class App extends Component {
             <div className="App">
                 <div id="redContainer">
                     <div id="bloc1">
-                        {/*<h1>HANG - MAN</h1>*/}
-                        <img className="hangManTitle" src={require('./img/hangman.png')} />
+                        <h1 className="hangManTitle"><span>H</span>ANG<span>M</span>AN</h1>
                         <button className="myButton" onClick={this.newWord}>Nouveau mot</button>
                         <p className="usertry">{this.state.usertry}</p>
-
                         <form onSubmit={this.handleSubmit} >
                             <label disabled="disabled">
                                 <input className="letterinput"
@@ -105,10 +109,10 @@ class App extends Component {
                                        autoComplete="off"
                                        pattern="[A-Za-z]{1}"/>
                             </label><br/>
-                            <input  type="submit" value="Submit" disabled={!isEnabled} />
+                            <input className="myButton" type="submit" value="Tester" disabled={!isEnabled} />
                         </form>
-                        {!this.state.usertry.includes("_")&&<span>YOU WIN</span>}
-                        {this.state.losecount === 0&&<span>YOU LOSE</span>}
+                        {!this.state.usertry.includes("_")&&<span className="endGame">VICTOIRE</span>}
+                        {this.state.losecount === 0&&<span className="endGame">PERDU</span>}
                     </div>
                     <div id="bloc2">
                         <img className="hangMan" src={require('./img/'+this.state.losecount+'.png')} />
