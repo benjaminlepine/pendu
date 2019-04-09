@@ -39,13 +39,11 @@ class App extends Component {
 
     handleSubmit = (event) => {
         event.preventDefault();
-
         let losecount = this.state.losecount;
         let hiddenword = this.state.hiddenword.toLowerCase();
         let usertry = this.state.usertry;
         let letter = event.target.currentLetter.value;
         let notBonusLetter = 1;
-
 
         String.prototype.replaceAt=function(index, replacement) {
             return this.substr(0, index) + replacement+ this.substr(index + replacement.length);

@@ -31,12 +31,18 @@
 
 .usertry{
   color: white;
+  font-family: 'HangMan';
+  font-weight: bold;
   letter-spacing: 5px;
+  color: #970024;
   font-size: 40px;
 }
 
 .letterinput{
   padding-bottom: 13px;
+  font-family: 'HangMan';
+  border-radius: 12px;
+  font-weight: bold;
   font-size: 50px;
   width: 18%;
   margin-bottom: 15px;
@@ -67,8 +73,6 @@
 .hangManTitle > span {
   color: #970024;
 }
-
-
 
 .myButton {
   font-family: 'HangMan';
